@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" width="400" height="240">
+  <defs>
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#C5A55E"/>
+      <stop offset="50%" stop-color="#D4B87A"/>
+      <stop offset="100%" stop-color="#B8943D"/>
+    </linearGradient>
+    <linearGradient id="woodGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3E2723"/>
+      <stop offset="100%" stop-color="#2C1810"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background (transparent, for preview) -->
+  <rect width="400" height="240" fill="#FDF8F0" rx="12"/>
+
+  <!-- Icon: Geometric Diamond + Ripple -->
+  <g transform="translate(100, 90)">
+    <!-- Outer diamond frame -->
+    <polygon points="60,0 120,50 60,100 0,50"
+             fill="none" stroke="url(#woodGrad)" stroke-width="2.5"
+             stroke-linejoin="round"/>
+
+    <!-- Inner ripple arcs -->
+    <path d="M60,20 Q85,45 60,80" fill="none" stroke="url(#goldGrad)" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M60,30 Q75,48 60,70" fill="none" stroke="url(#goldGrad)" stroke-width="1.4" stroke-linecap="round"/>
+
+    <!-- Center gold dot -->
+    <circle cx="60" cy="50" r="3.5" fill="url(#goldGrad)"/>
+
+    <!-- Subtle corner accents -->
+    <line x1="60" y1="5" x2="60" y2="15" stroke="url(#goldGrad)" stroke-width="1" stroke-linecap="round"/>
+    <line x1="55" y1="10" x2="65" y2="10" stroke="url(#goldGrad)" stroke-width="1" stroke-linecap="round"/>
+  </g>
+
+  <!-- Text -->
+  <text x="200" y="155" text-anchor="middle"
+        font-family="'Noto Serif SC', 'STSong', 'SimSun', 'Songti SC', serif"
+        font-size="36" font-weight="600" letter-spacing="8"
+        fill="#3E2723">源头家具</text>
+
+  <text x="200" y="182" text-anchor="middle"
+        font-family="'Helvetica Neue', 'Arial', sans-serif"
+        font-size="10" font-weight="300" letter-spacing="7"
+        fill="#8D7B6A">SOURCE  FURNITURE</text>
+
+  <!-- Gold underline accent -->
+  <line x1="140" y1="198" x2="260" y2="198" stroke="url(#goldGrad)" stroke-width="1" stroke-linecap="round"/>
+</svg>

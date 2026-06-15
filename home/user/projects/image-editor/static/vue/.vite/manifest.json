@@ -1,0 +1,65 @@
+{
+  "index.html": {
+    "file": "assets/index.js",
+    "name": "index",
+    "src": "index.html",
+    "isEntry": true,
+    "dynamicImports": [
+      "src/pages/LoginPage.vue",
+      "src/pages/DashboardPage.vue",
+      "src/pages/ImageListPage.vue",
+      "src/pages/ImageUploadPage.vue"
+    ],
+    "css": [
+      "assets/index.css"
+    ]
+  },
+  "src/pages/DashboardPage.vue": {
+    "file": "assets/DashboardPage.js",
+    "name": "DashboardPage",
+    "src": "src/pages/DashboardPage.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html"
+    ],
+    "css": [
+      "assets/DashboardPage.css"
+    ]
+  },
+  "src/pages/ImageListPage.vue": {
+    "file": "assets/ImageListPage.js",
+    "name": "ImageListPage",
+    "src": "src/pages/ImageListPage.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html"
+    ],
+    "css": [
+      "assets/ImageListPage.css"
+    ]
+  },
+  "src/pages/ImageUploadPage.vue": {
+    "file": "assets/ImageUploadPage.js",
+    "name": "ImageUploadPage",
+    "src": "src/pages/ImageUploadPage.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html"
+    ],
+    "css": [
+      "assets/ImageUploadPage.css"
+    ]
+  },
+  "src/pages/LoginPage.vue": {
+    "file": "assets/LoginPage.js",
+    "name": "LoginPage",
+    "src": "src/pages/LoginPage.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html"
+    ],
+    "css": [
+      "assets/LoginPage.css"
+    ]
+  }
+}
