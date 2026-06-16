@@ -4,8 +4,13 @@ URL configuration for image_editor project.
 from django.contrib import admin
 from django.urls import path
 from django.http import HttpResponseRedirect
-from django.conf import settings
+from django.conf import settings as conf
 from django.conf.urls.static import static
+
+admin.site.site_title = '尚品工坊 管理后台'
+admin.site.site_header = '尚品工坊'
+admin.site.index_title = '管理首页'
+
 from editor import views
 from editor import views_auth
 
@@ -21,6 +26,7 @@ urlpatterns = [
     # 业务
     path('api/contract/submit/', views.submit_contract, name='submit_contract'),
     path('api/order/submit/', views.submit_order, name='submit_order'),
+    path('api/shop-categories/', views.get_shop_categories, name='get_shop_categories'),
     path('api/categories/', views.get_categories, name='get_categories'),
     path('api/products/', views.get_products, name='get_products'),
     path('api/cases/', views.get_cases, name='get_cases'),
@@ -36,4 +42,4 @@ urlpatterns = [
     path('api/faqs/', views.get_faqs, name='get_faqs'),
     path('api/orders/mine/', views.my_orders, name='my_orders'),
     path('api/orders/<int:order_id>/delete/', views.delete_order, name='delete_order'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(conf.MEDIA_URL, document_root=conf.MEDIA_ROOT)

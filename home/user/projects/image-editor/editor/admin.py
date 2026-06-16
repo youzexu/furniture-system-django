@@ -4,7 +4,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.html import format_html
 from django.http import HttpResponse
 import csv
-from .models import Contract, Order, Product, CustomCase, Partner, Testimonial, Workshop, Craft, FAQ, Category, SiteConfig, Announcement, Banner, SeoConfig
+from .models import Contract, Order, Product, CustomCase, Partner, Testimonial, Workshop, Craft, FAQ, Category, SiteConfig, Announcement, Banner, SeoConfig, ShopCategory
 
 
 @admin.register(SiteConfig)
@@ -29,14 +29,33 @@ class SeoConfigAdmin(admin.ModelAdmin):
 class AnnouncementAdmin(admin.ModelAdmin):
     list_display = ["text", "is_active", "sort"]
     list_editable = ["is_active", "sort"]
+    fieldsets = (('公告内容', {'fields': ('text', 'link')}), ('状态', {'fields': ('sort', 'is_active')}))
 
 
 @admin.register(Banner)
 class BannerAdmin(admin.ModelAdmin):
-    list_display = ["title", "is_active", "sort"]
+    list_display = ["image_preview", "title", "is_active", "sort"]
     list_editable = ["is_active", "sort"]
+    fieldsets = (('基本信息', {'fields': ('title', 'image', 'link')}), ('状态', {'fields': ('sort', 'is_active')}))
+
+    @admin.display(description='图片')
+    def image_preview(self, obj):
+        if obj.image: return format_html('<img src="{}" style="width:80px;height:50px;object-fit:cover" />', obj.image.url)
+        return '-'
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['image_preview', 'name', 'key', 'sort', 'is_active']
+    list_editable = ['sort', 'is_active']
+
+    @admin.display(description='图片')
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" style="width:50px;height:50px;object-fit:cover" />', obj.image.url)
+        return format_html('<img src="http://localhost:5173/images/cat-{}.svg" style="width:50px;height:50px" />', obj.key)
+
+
+@admin.register(ShopCategory)
+class ShopCategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'key', 'sort', 'is_active']
     list_editable = ['sort', 'is_active']
 
@@ -53,6 +72,7 @@ class WorkshopAdmin(admin.ModelAdmin):
     list_display = ['name', 'area', 'workers', 'is_active', 'sort']
     list_editable = ['sort', 'is_active']
     search_fields = ['name', 'equip']
+    fieldsets = (('基本信息', {'fields': ('name', 'area', 'workers')}), ('设备清单', {'fields': ('equip',)}), ('状态', {'fields': ('sort', 'is_active')}))
 
 
 @admin.register(Craft)
@@ -60,6 +80,7 @@ class CraftAdmin(admin.ModelAdmin):
     list_display = ['step', 'title', 'sort']
     list_editable = ['sort']
     search_fields = ['title', 'desc']
+    fieldsets = (('步骤信息', {'fields': ('step', 'title')}), ('详细描述', {'fields': ('desc',)}), ('排序', {'fields': ('sort',)}))
 
 
 @admin.register(Partner)
@@ -81,6 +102,11 @@ class CustomCaseAdmin(admin.ModelAdmin):
     list_display = ['name', 'case_type', 'area', 'style', 'is_active', 'created_at']
     list_filter = ['case_type', 'style', 'is_active']
     search_fields = ['name', 'desc']
+    fieldsets = (
+        ('基本信息', {'fields': ('name', 'case_type', 'area', 'style')}),
+        ('描述', {'fields': ('desc',)}),
+        ('状态', {'fields': ('is_active',)}),
+    )
 
 
 # 先注销默认 User，再用自定义 UserAdmin 重新注册
@@ -119,7 +145,7 @@ class ProductAdmin(admin.ModelAdmin):
         return obj.category.name if obj.category else '-'
 
     fieldsets = (
-        ('基本信息', {'fields': ('code', 'name', 'category', 'material', 'price')}),
+        ('基本信息', {'fields': ('code', 'name', 'category', 'shop_category', 'material', 'price')}),
         ('展示信息', {'fields': ('image', 'desc', 'size', 'details', 'tag')}),
         ('状态', {'fields': ('is_active',)}),
     )

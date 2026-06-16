@@ -1,0 +1,77 @@
+{% load i18n static simpletags %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>尚品工坊 管理后台 - 登录</title>
+<link rel="stylesheet" href="{% static 'admin/simpleui-x/css/login.css' %}?_=2.1">
+<link rel="stylesheet" href="{% static 'admin/simpleui-x/theme/simpleui.css' %}">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { 
+    display:flex; align-items:center; justify-content:center; min-height:100vh;
+    background:#fafaf8; padding:40px; font-family:'Noto Serif SC','PingFang SC','Microsoft YaHei',sans-serif;
+  }
+  .login-wrapper { display:flex; width:820px; max-width:95vw; background:#fff; border:1px solid #eee; box-shadow:0 2px 30px rgba(0,0,0,.06); min-height:500px; }
+  .brand-side { width:380px; flex-shrink:0; background:linear-gradient(135deg,#1a1a1a,#2c1810,#3d2b1f); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:60px 40px; position:relative; text-align:center; }
+  .brand-side::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 40% 50%,rgba(139,105,20,.12),transparent 60%); }
+  .brand-side>* { position:relative; z-index:1; }
+  .brand-logo { font-size:30px; font-weight:300; letter-spacing:10px; margin-bottom:12px; }
+  .brand-logo b { color:#c9a84c; font-weight:300; }
+  .brand-sub { font-size:12px; color:rgba(255,255,255,.45); letter-spacing:4px; }
+  .brand-features { margin-top:50px; display:flex; flex-direction:column; gap:14px; }
+  .brand-features span { font-size:13px; color:rgba(255,255,255,.5); letter-spacing:2px; }
+  .brand-features span::before { content:'✦ '; color:#c9a84c; }
+  
+  .form-side { flex:1; padding:60px 50px; display:flex; flex-direction:column; justify-content:center; }
+  .form-side h2 { font-size:20px; font-weight:400; letter-spacing:4px; color:#1a1a1a; margin-bottom:8px; }
+  .form-side .desc { font-size:12px; color:#999; letter-spacing:1px; margin-bottom:36px; }
+  .form-group { margin-bottom:20px; }
+  .form-group label { display:block; font-size:12px; color:#555; letter-spacing:2px; margin-bottom:6px; }
+  .form-group input { width:100%; padding:14px 16px; border:1px solid #e0d8cc; background:#fafaf8; font-size:14px; color:#333; outline:none; transition:border-color .3s; }
+  .form-group input:focus { border-color:#8b6914; background:#fff; }
+  .submit-btn { width:100%; padding:16px; background:#8b6914; color:#fff; border:none; font-size:14px; letter-spacing:6px; cursor:pointer; transition:background .3s; font-family:inherit; }
+  .submit-btn:hover { background:#7a5c12; }
+  .errorlist { background:#fef2f2; border:1px solid #fecaca; color:#c00; padding:12px 16px; font-size:13px; margin-bottom:20px; text-align:center; list-style:none; }
+  .errorlist li { margin:0; }
+  @media(max-width:768px) { .login-wrapper{flex-direction:column} .brand-side{width:100%;padding:40px 30px;min-height:200px} .form-side{padding:40px 30px} .brand-logo{font-size:22px;letter-spacing:6px} }
+</style>
+</head>
+<body>
+<div class="login-wrapper">
+  <div class="brand-side">
+    <div class="brand-logo"><b>◆</b> 尚品工坊</div>
+    <div class="brand-sub">家具源头工厂 · 高端定制专家</div>
+    <div class="brand-features">
+      <span>23 年行业深耕</span>
+      <span>30,000㎡ 智造基地</span>
+      <span>200+ 资深匠人</span>
+    </div>
+  </div>
+  <div class="form-side">
+    <h2>后台管理</h2>
+    <div class="desc">登录以管理网站内容</div>
+    {% if form.errors and not form.non_field_errors %}
+    <ul class="errorlist"><li>用户名或密码错误，请重试。</li></ul>
+    {% endif %}
+    {% if form.non_field_errors %}
+    <ul class="errorlist">{% for error in form.non_field_errors %}<li>{{ error }}</li>{% endfor %}</ul>
+    {% endif %}
+    <form action="{{ app_path }}" method="post" id="login-form">
+      {% csrf_token %}
+      <div class="form-group">
+        <label>{{ form.username.label }}</label>
+        {{ form.username }}
+      </div>
+      <div class="form-group">
+        <label>{{ form.password.label }}</label>
+        {{ form.password }}
+        <input type="hidden" name="next" value="{{ next }}">
+      </div>
+      <button type="submit" class="submit-btn">登 录</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

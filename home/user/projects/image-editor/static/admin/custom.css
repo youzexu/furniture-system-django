@@ -1,0 +1,63 @@
+/* 尚品工坊 Admin 定制样式 */
+:root {
+  --gold: #8b6914;
+  --gold-light: #c9a84c;
+  --dark: #1a1a1a;
+  --dark2: #2c1810;
+}
+
+/* 导航栏背景 */
+.menu .el-menu,
+.navbar,
+#header {
+  background: var(--dark) !important;
+}
+
+/* 菜单选中 */
+.el-menu-item.is-active,
+.el-menu-item.is-active i {
+  color: var(--gold-light) !important;
+  background: rgba(139, 105, 20, 0.1) !important;
+}
+
+/* 顶部栏 */
+.navbar .logo-wrap {
+  color: var(--gold-light) !important;
+}
+.navbar .logo-wrap img {
+  max-height: 40px !important;
+  width: auto !important;
+}
+
+/* 按钮主色 */
+.el-button--primary {
+  background: var(--gold) !important;
+  border-color: var(--gold) !important;
+}
+.el-button--primary:hover {
+  background: #7a5c12 !important;
+}
+
+/* 链接色 */
+a, a:visited {
+  color: var(--gold);
+}
+a:hover {
+  color: #a67c1e;
+}
+
+/* 表格选中行 */
+.el-table__body tr.current-row > td {
+  background: rgba(139, 105, 20, 0.05) !important;
+}
+
+/* 面包屑 */
+.breadcrumb {
+  color: var(--gold) !important;
+}
+
+/* 首页模块标题 */
+#home-content .el-card__header {
+  background: var(--dark) !important;
+  color: var(--gold-light) !important;
+}

@@ -5,6 +5,8 @@ class Category(models.Model):
     """产品分类"""
     name = models.CharField('分类名称', max_length=50, unique=True)
     key = models.CharField('英文标识', max_length=30, unique=True)
+    desc = models.CharField('描述', max_length=200, blank=True, default='')
+    image = models.ImageField('分类图片', upload_to='categories/', blank=True)
     sort = models.IntegerField('排序', default=0)
     is_active = models.BooleanField('启用', default=True)
 
@@ -16,11 +18,23 @@ class Category(models.Model):
     def __str__(self): return self.name
 
 
+class ShopCategory(models.Model):
+    """购买页分类"""
+    name = models.CharField('名称', max_length=50, unique=True)
+    key = models.CharField('英文标识', max_length=30, unique=True)
+    sort = models.IntegerField('排序', default=0)
+    is_active = models.BooleanField('启用', default=True)
+    class Meta:
+        db_table = 'shop_categories'; verbose_name = verbose_name_plural = '购买分类'; ordering = ['sort']
+    def __str__(self): return self.name
+
+
 class Product(models.Model):
     """成品商品"""
     code = models.CharField('型号', max_length=20, unique=True)
     name = models.CharField('名称', max_length=100)
-    category = models.ForeignKey(Category, verbose_name='分类', on_delete=models.SET_NULL, null=True, blank=True)
+    category = models.ForeignKey(Category, verbose_name='产品分类', on_delete=models.SET_NULL, null=True, blank=True)
+    shop_category = models.ForeignKey(ShopCategory, verbose_name='购买分类', on_delete=models.SET_NULL, null=True, blank=True)
     material = models.CharField('材质', max_length=200, blank=True, default='')
     price = models.DecimalField('价格', max_digits=10, decimal_places=2)
     desc = models.CharField('描述', max_length=200, blank=True, default='')

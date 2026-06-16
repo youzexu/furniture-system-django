@@ -54,7 +54,7 @@ ROOT_URLCONF = 'image_editor.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -132,6 +132,12 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_CREDENTIALS = True
 
 # SimpleUI 自定义配置
+SIMPLEUI_DEFAULT_THEME = 'simpleui.css'
+SIMPLEUI_STATIC_OFFLINE = True
+SIMPLEUI_HOME_INFO = False
+SIMPLEUI_ANALYSIS = False
+SIMPLEUI_TITLE = '尚品工坊 管理后台'
+SIMPLEUI_HEADER = '尚品工坊'
 SIMPLEUI_INDEX = 'http://localhost:5173'
 SIMPLEUI_HOME_URL = 'http://localhost:5173'
 SIMPLEUI_HOME_TITLE = '返回官网首页'
@@ -148,6 +154,11 @@ SIMPLEUI_CONFIG = {
                     'name': '分类管理',
                     'icon': 'fas fa-tags',
                     'url': '/admin/editor/category/',
+                },
+                {
+                    'name': '购买分类',
+                    'icon': 'fas fa-tag',
+                    'url': '/admin/editor/shopcategory/',
                 },
                 {
                     'name': '商品管理',

@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST, require_GET
 
-from .models import Contract, Order, Product, CustomCase, Partner, Testimonial, Workshop, Craft, FAQ, Category, SiteConfig, Announcement, Banner, SeoConfig
+from .models import Contract, Order, Product, CustomCase, Partner, Testimonial, Workshop, Craft, FAQ, Category, SiteConfig, Announcement, Banner, SeoConfig, ShopCategory
 
 
 @csrf_exempt
@@ -82,17 +82,26 @@ def submit_order(request):
 @require_GET
 def get_categories(request):
     qs = Category.objects.filter(is_active=True).order_by('sort')
+    return JsonResponse({'success': True, 'data': [{'key': c.key, 'name': c.name, 'desc': c.desc, 'image': c.image.url if c.image else ''} for c in qs]})
+
+
+@require_GET
+def get_shop_categories(request):
+    qs = ShopCategory.objects.filter(is_active=True).order_by('sort')
     return JsonResponse({'success': True, 'data': [{'key': c.key, 'name': c.name} for c in qs]})
 
 
 @require_GET
 def get_products(request):
     """返回成品商品数据给前端"""
-    qs = Product.objects.filter(is_active=True).select_related('category').order_by('category__sort', 'code')
+    qs = Product.objects.filter(is_active=True).select_related("category", "shop_category").order_by('category__sort', 'code')
     cat = request.GET.get('cat', '')
     search = request.GET.get('search', '')
     if cat and cat != 'all':
         qs = qs.filter(category=cat)
+    shop_cat = request.GET.get("shop_cat", "")
+    if shop_cat and shop_cat != "all":
+        qs = qs.filter(shop_category__key=shop_cat)
     if search:
         query = Q()
         for ch in search:
@@ -102,6 +111,8 @@ def get_products(request):
 
     data = [{
         'code': p.code, 'name': p.name, 'cat': p.category.key if p.category else '',
+        'shop_cat': p.shop_category.key if p.shop_category else '',
+        'shop_catName': p.shop_category.name if p.shop_category else '',
         'catName': p.category.name if p.category else '',
         'material': p.material, 'price': f'¥{int(p.price):,}',
         'priceNum': int(p.price), 'desc': p.desc, 'tag': p.tag,
